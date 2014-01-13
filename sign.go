@@ -96,6 +96,10 @@ type Service struct {
 
 // Sign signs an HTTP request with the given S3 keys for use on service s.
 func (s *Service) Sign(r *http.Request, k Keys) {
+	// if no accessKey given, nothing to do.
+	if len(k.AccessKey) == 0 {
+		return
+	}
 	if k.SecurityToken != "" {
 		r.Header.Set("X-Amz-Security-Token", k.SecurityToken)
 	}
